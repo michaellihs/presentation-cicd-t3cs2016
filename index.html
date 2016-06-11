@@ -1,0 +1,378 @@
+	<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Continuous Delivery :: Tools - Workflow - Culture</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section><h1>Continuous Delivery</h1><br><h2>Tools - Workflows - Culture</h2></section>
+				<section>
+					<h2>Sebastian Helzle</h2><br><br>https://github.com/Sebobo @sebobo <br>@punkt_de
+				</section>
+				<section>
+					<h2>Michael Lihs </h2><br><br>lihsmi.ch @kaktusmimi <br>@boschglobal
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Agenda
+
+				        - Introduction
+				        - Tools
+				        - Workflow(s)
+				        - Culture
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Continuous Delivery - Why?
+
+				        <img data-src="images/iterate.png" style="border: 0; background: none">
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Tools - Workflow(s) - Culture
+
+				        - Tools provide infrastructure
+				        - Workflows provide best-practices
+				        - Culture is what you actually do
+				        - You have to **live** it!
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Part 1
+				        # Tools
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Development Environment
+				        
+				        - VirtualBox
+				        - Vagrant
+				        - Proper IDE
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Version Control
+				        
+				        - Git
+				        - Gitlab
+				        - Sourcetree
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Continuous Integration
+				        
+				        - Jenkins
+				        - Pipeline Plugin
+				        - Docker for ephememeral build containers
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Pipeline Example
+
+						node {
+
+						    stage 'Clone from Git'
+						    git url: 'GIT_URL'
+
+						    stage 'Build'
+						    sh 'composer install'
+						    sh 'grunt'
+
+						    stage 'Unit Tests'
+						    sh 'phpunit --bootstrap src/autoload.php tests/unit'
+
+						    stage 'Deploy to Test'
+						    sh './flow surf:deploy project'
+
+						}
+					</script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Pipeline Example
+				        
+				        <img data-src="images/pipeline.png" style="border: 0; background: none">
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Artifact Storage
+				        
+				        - Artifactory
+				          - JS / CSS builds
+				          - PHP packages (composer)
+				          - Docker Images
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Testing
+				        
+				        - PHPUnit
+				        - Selenium
+				        - Behat
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Delivery (a.k.a. Deployment)
+				        
+				        - Surf
+				        - Fabric
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Environments
+				        
+				        - Integration, Staging, Production
+				        - Use immutable infrastructure
+				        - If you really need it, use either
+				          - Ansible
+				          - Chef
+				          - ...
+				        - But really: use **immutable** infrastructure
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Logging, Monitoring
+				        
+				        - ELK Stack
+				        - Kibana
+				        - Dashing
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Tools - Overview
+				        
+				        <img data-src="images/tool-overview.png" style="border: 0; background: none">
+				    </script>
+				</section>
+
+
+
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Part 2
+				        # Workflow(s)
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Development Workflow
+				        
+				        - Develop locally
+				          - Dev Servers are dead
+				        - Pair Programming
+				        - Code Review
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Version Control
+				        
+				        - Short living feature branches
+				          - Develop branches are evil
+				          - Regularly integrate into master
+				        - Merge Request (Gitlab)
+				        - Problem: Deliver tasks independently
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Merge Request Workflow
+				        
+				        - Create a feature branch (PRJ-123)
+				        - Implement your feature
+				        - Push branch to Gitlab server
+				        - Create merge request
+				        - Assign it to your colleague
+				        - Merge or decline
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Continuous Integration
+				        
+				        <img data-src="images/feedback.png" style="border: 0; background: none">
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Feedback Loops
+
+				        - Establish a Continuous Delivery pipeline
+				        - Separate stages from fast to slow(er)
+				          - Run tests locally (before push)
+				          - Build on CI server
+				          - Run Unit Tests
+				          - Run Integration Tests
+				          - ...
+				          - Deploy to Staging
+				          - Deploy to Production
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Do NOT program on the CI Server
+				        
+				        - Use pipeline plugin
+				        - Make build pipeline part of project
+				          - Write a (simple) script
+				          - Version it
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Do not run jobs on Jenkins Master
+				        
+				        - Use agents
+				        - Run agents in short living (ephemeral) containers
+				        - Separate build environments
+				        - Provide greenfield to each build
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Build once, use everywhere
+
+				        - Make builds traceable
+				        - Do not build things more than once
+				        - Build an re-use
+				    </script>
+				</section>
+
+
+
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Part 3
+				        # Culture
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Feedback
+
+				        - Personal Feedback
+				          - Pairing - close session with feedback
+				          - Retrospectives
+				          - Customer feedback
+				          - User feedback
+				        - Automated Feedback
+				          - Tests
+				          - Monitoring
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## KISS
+
+				        - Keep It Simple Stupid
+				        - Strive for understanding
+				        - Make whole team understand the toolchain
+				        - Motivate by simplicity not by complexity
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Strive for Agility
+
+				        - Individuals and interactions >> processes and tools 
+				          - Stable teams
+				          - Iteratively develop and track processes<br>
+				        - Working software >> comprehensive documentation
+				          - Convention over documentation
+				          - Frameworks, well-known software and tools
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## Strive for Agility
+
+				        - Customer collaboration >> contract negotiation
+				          - Include customer in planning and review (and retrospectives?)
+				          - Provide access to JIRA, test system, monitoring, test results<br>
+				        - Respond to change >> follow a plan
+				          - Small batches, iterations 
+				          - Get changes on the road quickly
+				    </script>
+				</section>
+				<section data-markdown>
+				    <script type="text/template">
+				        ## 
+				    </script>
+				</section>
+
+
+<!--
+				
+  * Continuous Integration
+    * Jenkins
+    * Pipeline Plugin
+    * Make Build jobs part of project (versioning, changelog)
+    * Ephemeral Build Agents (Docker)
+  * Artifact Storage
+    * Store build artifacts
+    * Build once - reuse everywhere
+  * Delivery aka Deployment
+    * Surf
+    * Ansible
+  * Dev - Staging - Test - Production Environments
+    * As similar as possible
+    * "Inject" configuration parameters (ENVIRONMENT)
+    * Strive for immutable infrastructure
+  * Monitoring & Logging
+    * ELK Stack
+    * Dashing
+-->
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
